@@ -496,8 +496,9 @@ app.post('/api/pagos/crear-preferencia', verificarToken, async (req, res) => {
 
 app.use((_req, res) => res.status(404).json({ success: false, error: "Ruta no encontrada" }));
 
-const PORT = 4000;
-app.listen(PORT, () => console.log(`✅ Servidor backend corriendo en http://localhost:${PORT}`));
+// ✅ ÚNICO CAMBIO: Puerto dinámico para Render
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, '0.0.0.0', () => console.log(`✅ Servidor backend corriendo en el puerto ${PORT}`));
 
 
 

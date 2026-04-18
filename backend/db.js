@@ -1,11 +1,14 @@
 import mysql from 'mysql2/promise';
 
 const config = {
-    host: 'localhost',      // Cambia si es necesario
-    port: 3307,             // El puerto que usas en DBeaver (3306 o 3307)
-    user: 'root',
-    password: '',           // Tu contraseña de MySQL
-    database: 'prototipo_5s',
+    host: 'mysql-fce179c-ramonjunior257-12ee.d.aivencloud.com',
+    port: 14199,
+    user: 'avnadmin',
+    password: 'AVNS_-TiR1lwoIODvhhtumN_',
+    database: 'defaultdb',
+    ssl: {
+        rejectUnauthorized: false  // Necesario para Aiven
+    },
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
@@ -17,9 +20,9 @@ export const getPool = async () => {
     if (!pool) {
         try {
             pool = await mysql.createPool(config);
-            console.log('✅ Conectado a MySQL - prototipo_5s');
+            console.log('✅ Conectado a Aiven MySQL - defaultdb');
         } catch (err) {
-            console.error('❌ Error de conexión:', err);
+            console.error('❌ Error de conexión a Aiven:', err);
             throw err;
         }
     }
