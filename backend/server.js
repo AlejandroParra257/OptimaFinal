@@ -8,6 +8,16 @@ import crypto from 'crypto';
 
 const app = express();
 
+// ===== CONECTAR A LA BD AL INICIAR =====
+(async () => {
+    try {
+        await getPool();
+        console.log('🚀 Conexión a BD establecida al iniciar');
+    } catch (err) {
+        console.error('❌ Error al conectar a la BD:', err);
+    }
+})();
+
 // ===== Middlewares =====
 app.use(cors());
 app.use(express.json({ limit: "20mb" }));
@@ -496,7 +506,7 @@ app.post('/api/pagos/crear-preferencia', verificarToken, async (req, res) => {
 
 app.use((_req, res) => res.status(404).json({ success: false, error: "Ruta no encontrada" }));
 
-// ✅ ÚNICO CAMBIO: Puerto dinámico para Render
+// ✅ Puerto dinámico para Render
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, '0.0.0.0', () => console.log(`✅ Servidor backend corriendo en el puerto ${PORT}`));
 
