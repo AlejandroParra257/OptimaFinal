@@ -1,13 +1,16 @@
 import mysql from 'mysql2/promise';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const config = {
-    host: 'mysql-fce179c-ramonjunior257-12ee.d.aivencloud.com',
-    port: 14199,
-    user: 'avnadmin',
-    password: 'AVNS_-TiR1lwoIODvhhtumN_',
-    database: 'defaultdb',
+    host: process.env.DB_HOST,
+    port: parseInt(process.env.DB_PORT),
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
     ssl: {
-        rejectUnauthorized: false  // Necesario para Aiven
+        rejectUnauthorized: false
     },
     waitForConnections: true,
     connectionLimit: 10,
