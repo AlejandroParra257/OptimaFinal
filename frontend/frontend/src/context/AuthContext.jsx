@@ -16,6 +16,9 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [token, setToken] = useState(localStorage.getItem('token'));
 
+    // URL del backend en producción
+    const API_URL = "https://optimafinal.onrender.com";
+
     // Verificar token al cargar la app
     useEffect(() => {
         if (token) {
@@ -28,7 +31,7 @@ export const AuthProvider = ({ children }) => {
     // Función para verificar si el token es válido
     const verificarToken = async () => {
         try {
-            const response = await fetch('http://localhost:4000/api/auth/verify', {
+            const response = await fetch(`${API_URL}/api/auth/verify`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -52,7 +55,7 @@ export const AuthProvider = ({ children }) => {
     // Función para iniciar sesión
     const login = async (email, password) => {
         try {
-            const response = await fetch('http://localhost:4000/api/auth/login', {
+            const response = await fetch(`${API_URL}/api/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
@@ -77,7 +80,7 @@ export const AuthProvider = ({ children }) => {
     // Función para registrarse
     const register = async (nombre, email, password) => {
         try {
-            const response = await fetch('http://localhost:4000/api/auth/register', {
+            const response = await fetch(`${API_URL}/api/auth/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ nombre, email, password })

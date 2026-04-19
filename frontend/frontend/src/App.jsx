@@ -39,7 +39,7 @@ ChartJS.register(
 // ============================================
 // SERVICIO API
 // ============================================
-const API_URL = "http://localhost:4000";
+const API_URL = "https://optimafinal.onrender.com";
 
 const api = {
   async getEntries(token) {
