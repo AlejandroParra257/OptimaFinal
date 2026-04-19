@@ -258,6 +258,7 @@ app.get("/entries", verificarToken, async (req, res) => {
   }
 });
 
+// ✅ RUTA CORREGIDA - CONVERSIÓN DE FECHA
 app.post("/entries", verificarToken, verificarLimitesNoVip, async (req, res) => {
   const { id, sKey, sLabel, note, photo, authorRole, createdAt } = req.body || {};
   const usuario_id = req.usuario.id;
@@ -266,12 +267,15 @@ app.post("/entries", verificarToken, verificarLimitesNoVip, async (req, res) => 
     return res.status(400).json({ success: false, error: "Faltan datos obligatorios" });
   }
 
+  // Convertir fecha ISO a formato MySQL (YYYY-MM-DD HH:MM:SS)
+  let fechaMySQL = new Date(createdAt).toISOString().slice(0, 19).replace('T', ' ');
+
   try {
     const pool = await getPool();
     await pool.execute(
       `INSERT INTO entries (id, sKey, sLabel, note, photo, authorRole, createdAt, usuario_id)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-      [id, sKey, sLabel, note || null, photo || null, authorRole || null, createdAt, usuario_id]
+      [id, sKey, sLabel, note || null, photo || null, authorRole || null, fechaMySQL, usuario_id]
     );
     res.status(201).json({ success: true, id });
   } catch (err) {
